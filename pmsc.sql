@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2025 at 05:48 AM
+-- Generation Time: Nov 04, 2025 at 10:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -125,6 +125,34 @@ CREATE TABLE `course_bank` (
 INSERT INTO `course_bank` (`course_id`, `course_name`, `status`) VALUES
 (1, 'Advanced Database Management (CSE-5201)', 1),
 (3, 'Project (CSEP-5300)/Thesis (CSET-5300)', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrollments`
+--
+
+CREATE TABLE `enrollments` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `batch_id` int(11) NOT NULL,
+  `session_id` varchar(50) NOT NULL,
+  `semester_id` int(11) NOT NULL,
+  `exam_year` int(11) NOT NULL,
+  `exam_type` tinyint(2) NOT NULL,
+  `student_id` varchar(20) NOT NULL,
+  `course_id` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `enrollments`
+--
+
+INSERT INTO `enrollments` (`id`, `batch_id`, `session_id`, `semester_id`, `exam_year`, `exam_type`, `student_id`, `course_id`, `created_at`) VALUES
+(1, 1, 'Summer-2025', 1, 2025, 0, 'M210202121', '[\"2\",\"4\",\"21\"]', '2025-11-04 10:24:12'),
+(2, 1, 'Summer-2025', 1, 2025, 0, 'M230201015', '[\"2\",\"4\",\"21\"]', '2025-11-04 10:24:56'),
+(3, 1, 'Summer-2025', 1, 2025, 0, 'M210202120', '[\"2\",\"4\",\"21\"]', '2025-11-04 10:24:56'),
+(4, 1, 'Summer-2025', 1, 2025, 0, 'M240302014', '[\"2\",\"4\",\"21\"]', '2025-11-04 10:24:56');
 
 -- --------------------------------------------------------
 
@@ -289,6 +317,13 @@ ALTER TABLE `course_bank`
   ADD PRIMARY KEY (`course_id`);
 
 --
+-- Indexes for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_enrollment` (`batch_id`,`session_id`,`semester_id`,`exam_year`,`exam_type`,`student_id`);
+
+--
 -- Indexes for table `retake_list`
 --
 ALTER TABLE `retake_list`
@@ -344,6 +379,12 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `course_bank`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `retake_list`
